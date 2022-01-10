@@ -1,0 +1,213 @@
+html,
+body,
+div,
+p,
+table,
+tr,
+th,
+td,
+input {
+    font-family: Roboto;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#map {
+    height: 100%;
+}
+
+.visible {
+    display: block;
+    visibility: visible;
+}
+
+.visible-inline {
+    display: inline;
+    visibility: visible;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.control-ui {
+    padding: 7px;
+}
+
+#search-control-ui,
+#results-control-ui {
+    user-select: initial;
+    background-color: white;
+    font-size: 12px;
+    margin: 20px;
+    max-height: 500px;
+    overflow: auto;
+    width: 500px;
+    padding: 8px;
+    border-radius: 2px;
+    -webkit-background-clip: padding-box;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    min-width: 40px;
+    background-clip: padding-box;
+}
+
+#results-control-ui {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#results-control-ui p {
+    margin-bottom: 5px;
+}
+
+#results-control-ui .result,
+#results-control-ui .active-result {
+    border-top: 1px solid lightgray;
+    display: block;
+    padding: 5px;
+}
+
+#results-control-ui .active-result {
+    background-color: #eef;
+}
+
+p.result-bounds {
+    color: #600;
+}
+
+p.result-viewport {
+    color: #006;
+}
+
+#bias-viewport-checkbox-label {
+    color: #060;
+}
+
+#query-input {
+    width: 78%;
+    margin: 10px 5px 5px 0;
+}
+
+#geocode-button {
+    padding: 1px 3px;
+}
+
+#show-hide-options-div {
+    font-size: 10px;
+}
+
+#show-hide-options-div a,
+#status-display-div p a,
+#view-all-in-map-link {
+    color: blue;
+    cursor: pointer;
+}
+
+#status-display-div p span {
+    display: inline;
+}
+
+#search-options-div table,
+#search-options-div table tbody,
+#search-options-div table tbody tr,
+#search-options-div table tbody tr td,
+#search-options-div table tbody tr td acronym,
+#search-options-div table tbody tr td input,
+#search-options-div table tbody tr td select,
+#search-options-div table tbody tr td select option,
+#search-options-div table tbody tr th,
+#search-options-div table tbody tr th a,
+#search-options-div table tbody tr th input,
+#search-options-div table tbody tr th label,
+#search-options-div table tbody tr th select,
+#search-options-div table tbody tr th select option {
+    font-size: 12px;
+    margin: 3px 0;
+}
+
+.headers {
+    color: red;
+    padding: 50px;
+}
+
+th {
+    color: gray;
+    text-align: left;
+}
+
+th a {
+    color: lightblue;
+}
+
+td {
+    padding-right: 5px;
+}
+
+td.vtop,
+td.vtop-strong {
+    vertical-align: top;
+}
+
+td.vtop-strong {
+    font-weight: bold;
+}
+
+.warn {
+    color: red;
+}
+
+.examples {
+    color: gray;
+}
+
+.left-column {
+    text-align: right;
+}
+
+.gray {
+    color: gray;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.address-components {
+    margin: 0 0 10px 20px;
+}
+
+.learn-more-link {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+span.OK {
+    color: green;
+}
+
+span.UNKNOWN_ERROR {
+    color: red;
+}
+
+span.OVER_QUERY_LIMIT {
+    color: orange;
+}
+
+span.REQUEST_DENIED {
+    color: red;
+}
+
+span.INVALID_REQUEST {
+    color: red;
+}
+
+span.ZERO_RESULTS {
+    color: #990;
+}
+
+span.OK {
+    color: green;
+}

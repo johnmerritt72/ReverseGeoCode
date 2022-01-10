@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <title>Attenti Reverse Geocoder Tool</title>
+    <meta name="robots" content="noindex">
+    <meta charset="utf-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="iframe" content="standalone">
+
+
+    <script nonce="hzRvJBfWPGA1RsHM9L0C/6aXL3ymKW">
+        (function() {
+            window.framebox = window.framebox || function() {
+                (window.framebox.q = window.framebox.q || []).push(arguments)
+            };
+
+            var a = {},
+                b = function() {
+                    (window.framebox.dq = window.framebox.dq || []).push(arguments)
+                };
+            ['getUrl', 'handleLinkClicksInParent', 'initAutoSize', 'navigate', 'pushState', 'replaceState',
+                'requestQueryAndFragment', 'sendEvent', 'updateSize'
+            ].forEach(function(x) {
+                a[x] = function() {
+                    b(x, arguments)
+                }
+            });
+            window.devsite = {
+                framebox: {
+                    AutoSizeClient: a
+                }
+            };
+        })();
+
+        (function(d, e, v, s, i, t, E) {
+            d['GoogleDevelopersObject'] = i;
+            t = e.createElement(v);
+            t.async = 1;
+            t.src = s;
+            E = e.getElementsByTagName(v)[0];
+            E.parentNode.insertBefore(t, E);
+        })(window, document, 'script',
+            'https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110c196e834c7f21fe3fb34e722925433ddb936d280c9/developers/js/app_loader.js', '[1,"en",null,"/js/devsite_app_module.js","https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110c196e834c7f21fe3fb34e722925433ddb936d280c9","https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110c196e834c7f21fe3fb34e722925433ddb936d280c9/developers","https://developers-dot-devsite-v2-prod.appspot.com",1,1,null,1,null,[1,6,8,12,14,17,18,21,25,40,45,50,63,70,75,76,80,87,91,92,93,97,98,100,101,102,103,104,105,107,108,109,110,111,112,113,115,117,118,120,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,138,141,142,143,144,147,148,149,150,151,152,153,154,156,157,158,159,161,164,165,168,169,173],"AIzaSyAP-jjEJBzmIyKR4F-3XITp8yM9T1gEEI8","AIzaSyB6xiKGDR5O3Ak2okS4rLkauxGUG7XP0hg","developers.google.com","AIzaSyAQk0fBONSGUqCNznf6Krs82Ap1-NV6J4o","AIzaSyCCxcqdrZ_7QMeLCRY20bh_SXdAYqy70KY"]')
+    </script>
+
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta name="description" content="Attenti Reverse Geocoder Tool" />
+        <title>Google Maps API Geocoder Tool</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;key=AIzaSyB-GodxsXZrkplcgERRRXuIyWeyDFIZbRM&amp;channel=88&amp;libraries=places"></script>
+        <script src="https://www.gstatic.com/external_hosted/mustache/mustache.js"></script>
+        <script src="https://www.gstatic.com/external_hosted/jquery2.min.js"></script>
+        <script src="js/constants.js"></script>
+        <script src="js/state.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/geocoder-tool.js"></script>
+
+        <script type="text/mustache" id="resultsTemplate">
+            <div class="result" id="result-{{i}}">
+                <table>
+                    <tbody>
+                        <tr valign="top">
+                            <td style="padding: 2px">
+                                <span id="result-{{i}}-marker-img" style="display:block;background-image:url({{icon}});width:20px;height:34px;"></span>
+                            </td>
+                            <td style="padding: 2px;">
+                                <p class="{{partialMatchClass}}">
+                                    <strong class="warn">Partial match</strong>
+                                </p>
+                                <p class="result-formatted-address">
+                                    <strong>Address:</strong> {{formattedAddress}}
+                                </p>
+                                <p class="result-location">
+                                    <strong>Location:</strong> {{locationLatlng}} (type: <acronym title="{{locationTypeDescription}}">
+                {{locationType}}</acronym>)</p>
+                                <p class="result-types">
+                                    <strong>Result Type:</strong> {{resultTypes}}
+                                </p>
+                                <p class="{{postcodeLocalitiesClass}}">
+                                    <strong>Postcode localities:</strong> {{ #postcodeLocalitiesLinks}} {{name}} {{/postcodeLocalitiesLinks}}
+                                </p>
+                                <div id="details-result-{{i}}">
+                                    {{ #bounds}}
+                                    <p class="result-bounds">
+                                        <strong>Bounds:</strong> {{bounds.sw}} – {{bounds.ne}}</p>
+                                    {{/bounds}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+
+    <body>
+        <div class="hidden">
+            <div id="search-control-ui">
+                <p>Enter a query to geocode, or click on the map to reverse geocode.</p>
+                <input id="query-input" autofocus>
+                <input id="geocode-button" type="button" value="Geocode" />
+                <div id="search-options-div" class="">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Result_Type
+                                </td>
+                                <td>
+                                    <select id="restrict-result-type">
+                                    <option value="">All</option>
+                                    <option value="street_address">street_address</option>
+                                    <option value="route">route</option>
+                                    <option value="intersection">intersection</option>
+                                    <option value="political">political</option>
+                                    <option value="country">country</option>
+                                    <option value="administrative_area_level_1">administrative_area_level_1</option>
+                                    <option value="administrative_area_level_2">administrative_area_level_2</option>
+                                    <option value="administrative_area_level_3">administrative_area_level_3</option>
+                                    <option value="administrative_area_level_4">administrative_area_level_4</option>
+                                    <option value="administrative_area_level_5">administrative_area_level_5</option>
+                                    <option value="colloquial_area">colloquial_area</option>
+                                    <option value="locality">locality</option>
+                                    <option value="sublocality">sublocality</option>
+                                    <option value="neighborhood">neighborhood</option>
+                                    <option value="premise">premise</option>
+                                    <option value="subpremise">subpremise</option>
+                                    <option value="plus_code">plus_code</option>
+                                    <option value="postal_code">postal_code</option>
+                                    <option value="natural_feature">natural_feature</option>
+                                    <option value="airport">airport</option>
+                                    <option value="park">park</option>
+                                    <option value="point_of_interest">point_of_interest</option>
+                                    </select>
+                                </td>
+                                </td>
+                                <td class="examples">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Location_Type
+                                </td>
+                                <td>
+                                    <select id="restrict-location-type">
+                                        <option value="">All</option>
+                                        <option value="ROOFTOP">ROOFTOP</option>
+                                        <option value="RANGE_INTERPOLATED">RANGE_INTERPOLATED</option>
+                                        <option value="GEOMETRIC_CENTER">GEOMETRIC_CENTER</option>
+                                        <option value="APPROXIMATE">APPROXIMATE</option>
+                                        </select>
+                                </td>
+                                <td class="examples">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="results-control-ui" class="hidden">
+                <div id="status-display-div">
+                    <p id="status-linkbar">
+                        Found <span id="status-display-results-length">no</span> results. (
+                        <span><a id="view-all-in-map-link">view all in map</a></span>) [ <span><a id="status-display-json-link" target="_atop" href="">JSON</a></span> |
+                        <span><a id="status-display-xml-link" target="_atop" href="">XML</a></span> ]
+                    </p>
+                </div>
+                <div id="results-display-div"></div>
+            </div>
+            <div class="result" id="result-template-div">
+                <table>
+                    <tbody>
+                        <tr valign="top">
+                            <td style="padding: 2px">
+                                <img id="result-template-div-marker-img" src="" />
+                            </td>
+                            <td style="padding: 2px;">
+                                <p class="result-partial-match">
+                                    <strong class="warn">Partial match</strong>
+                                </p>
+                                <p class="result-formatted-address">
+                                    <strong>Address:</strong>
+                                </p>
+                                <p class="result-location">
+                                    <strong>Location:</strong>
+                                </p>
+                                <p class="result-types">
+                                    <strong>Result Type:</strong>
+                                </p>
+                                <p class="result-postcode-localities">
+                                    <strong>Postcode localities:</strong>
+                                </p>
+                                <div id="details-result-template-dev">
+                                    <p><span class="gray">Address components:</span></p>
+                                    <table class="address-components">
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    <p class="result-bounds">
+                                        <strong>Bounds:</strong>
+                                    </p>
+                                    <p class="result-viewport">
+                                        <strong>Viewport:</strong>
+                                    </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div id="map"></div>
+    </body>
+
+    </html>
+
+</body>
+
+</html>
